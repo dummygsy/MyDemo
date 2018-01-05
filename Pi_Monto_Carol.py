@@ -16,7 +16,6 @@ def pi(n):
 		if i == 10**7 - 1:
 			print("when n = 10000000, pi = ", t / n * 4)
 			
-
 	return t / n * 4
 
 print("Final Result, pi = ", pi(10**7))
