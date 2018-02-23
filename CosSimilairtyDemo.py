@@ -11,7 +11,7 @@ remove_punctuation_map = dict((ord(char), None) for char in string.punctuation)
 def stem_tokens(tokens):
     return [stemmer.stem(item) for item in tokens]
 
-'''remove punctuation, lowercase, stem'''
+# Remove punctuation, lowercase, stem
 def normalize(text):
     return stem_tokens(nltk.word_tokenize(text.lower().translate(remove_punctuation_map)))
 
@@ -39,5 +39,11 @@ for i in range(0, len(des1)):
 		
 	
 # Get the index of the largest cos similarity value
-a = numpy.array(result)
-index = a.argmax(axis=1)
+# TODO: if the resultarray[i] are all zeros, which means that no mapping, then the 1st index "0" (Adhesives, mortars, plasters) will be returned.
+resultarray = numpy.array(result)
+index = resultarray.argmax(axis=1)
+
+# Print the auto mapping result
+print("The auto mapping result:")
+for i in range(0, len(des1)):
+    print(des1[i] + " == " + des2[index[i]])
