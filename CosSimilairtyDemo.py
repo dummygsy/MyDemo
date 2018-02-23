@@ -44,8 +44,8 @@ vectorizer = TfidfVectorizer(tokenizer=normalize, stop_words='english')
 
 def cosine_sim(text1, text2):
     # Learn vocabulary and idf, return term-document matrix. This is equivalent to fit followed by transform, but more efficiently implemented.
-	tfidf = vectorizer.fit_transform([text1, text2]) 
-	return ((tfidf * tfidf.T).A)[0,1]
+    tfidf = vectorizer.fit_transform([text1, text2]) 
+    return ((tfidf * tfidf.T).A)[0,1]
 
 
 # >>> tfidf = vectorizer.fit_transform(['a little bird', 'little dog'])
@@ -94,6 +94,7 @@ for i in range(0, len(des1)):
 # TODO: if the resultarray[i] are all zeros, which means that no mapping, then the 1st index "0" (Adhesives, mortars, plasters) will be returned.
 resultarray = numpy.array(result)
 index = resultarray.argmax(axis=1)
+print(index)
 
 # Print the auto mapping result
 print("The auto mapping result:")
