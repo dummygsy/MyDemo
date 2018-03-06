@@ -1,6 +1,8 @@
 import urllib.request
 from bs4 import BeautifulSoup
 import nltk
+from nltk.corpus import stopwords
+
 
 ''' Download the webpage '''
 response = urllib.request.urlopen('http://php.net/')
@@ -23,6 +25,17 @@ tokens = [t for t in text.split()]
 #print ("tokens:")
 #print (tokens)
 
+''' Remove stop words '''	
+clean_tokens = tokens[:]
+
+# nltk.download('stopwords') # just download for the 1st time
+sr = stopwords.words('english')
+ 
+for token in tokens:
+    if token in stopwords.words('english'):
+        clean_tokens.remove(token)
+
+		
 
 ''' Count Word Frequence '''
 freq = nltk.FreqDist(tokens)
