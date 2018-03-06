@@ -2,7 +2,7 @@ import nltk, string
 import numpy
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-nltk.download('punkt') # if necessary...
+# nltk.download('punkt') # just download for the 1st time
 
 
 stemmer = nltk.stem.porter.PorterStemmer()
