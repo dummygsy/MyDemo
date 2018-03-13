@@ -6,7 +6,7 @@ class DocSim(object):
     def __init__(self, w2v_model , stopwords=[]):
         self.w2v_model = w2v_model
         self.stopwords = stopwords
-
+    
     def vectorize(self, doc):
         ''' Identify the vector values for each word in the given document '''
         doc = doc.lower()
@@ -19,26 +19,26 @@ class DocSim(object):
             except KeyError:
                 ''' Ignore, if the word doesn't exist in the vocabulary '''
                 pass
-
+    
         ''' Assuming that document vector is the mean of all the word vectors '''
         # TODO: DocVec is the mean value of all word vectors. Is there any better way to calculate the doc vector?
         vector = np.mean(word_vecs, axis=0)
         return vector
-
-
+    
+    
     def _cosine_sim(self, vecA, vecB):
         '''Find the cosine similarity distance between two vectors.'''
         csim = np.dot(vecA, vecB) / (np.linalg.norm(vecA) * np.linalg.norm(vecB))
         if np.isnan(np.sum(csim)):
             return 0
         return csim
-
+    
     def calculate_similarity(self, source_doc, target_docs=[], threshold=0):
         '''Calculates & returns similarity scores between given source document & all
         the target documents.'''
         if isinstance(target_docs, str):
             target_docs = [target_docs]
-
+    
         source_vec = self.vectorize(source_doc)
         results = []
         for target_doc in target_docs:
@@ -51,7 +51,7 @@ class DocSim(object):
                 })
             ''' Sort results by score in desc order '''
             results.sort(key=lambda k : k['score'] , reverse=True)
-
+    
         return results
 
 
