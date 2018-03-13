@@ -57,7 +57,7 @@ class DocSim(object):
 
 # This model is 3.4G, need long time to load and run.
 model_path = './GoogleNews-vectors-negative300.bin'
-w2v_model = KeyedVectors.load_word2vec_format(model_path, binary=True)
+w2v_model = KeyedVectors.load_word2vec_format(model_path, binary=True, limit = 200000)
 		
 ds = DocSim(w2v_model)
 
