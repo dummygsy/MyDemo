@@ -56,8 +56,10 @@ class DocSim(object):
 
 
 # This model is 3.4G, need long time to load and run.
+# Add a parameter 'limit': Sets a maximum number of word-vectors to read from the file. The default, None, means read all.
+model_loading_limit = 20000
 model_path = './GoogleNews-vectors-negative300.bin'
-w2v_model = KeyedVectors.load_word2vec_format(model_path, binary=True, limit = 200000)
+w2v_model = KeyedVectors.load_word2vec_format(model_path, binary=True, limit = model_loading_limit)
 		
 ds = DocSim(w2v_model)
 
