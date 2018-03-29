@@ -84,6 +84,9 @@ print("~~~~~~~~~~~~")
 result = []
 
 # des1[76], "Starils", the socre of "Starils" are all 0s. To avoid issue (when threshold is default value 0, and all socres are 0, then no results in the return value of calculate_similarity() ), change "if sim_score > threshold:" to "if sim_score >= threshold:".
+
+# Why the socre of "Starils" are all 0s? The answer is that "Starils", this word is not in the w2v model. "vec = self.w2v_model[word]" will return a KeyError, and the return value of vectorize("Starils") is nan. The cosine simalirty value of a nan vector and other vector is always 0.
+
 '''
 sim_scores = ds.calculate_similarity(des1[76], des2)
 print(sim_scores)
