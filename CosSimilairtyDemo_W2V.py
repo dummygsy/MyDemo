@@ -7,6 +7,12 @@ class DocSim(object):
         self.w2v_model = w2v_model
         self.stopwords = stopwords
     
+	# This methord "vectorize" return the vector of the input parameter 'doc'.
+	# The vector of a word is a 300-dimentinal vector. 
+	# The vector of a doc is a 300-dimentinal vector, which is a mean of all its word vector. 
+	#
+	# If one word of the doc is not in the model, then the word vector will not be added into the word_vecs list. For example, if the doc is "ready-mixed concrete", it will be splited into 2 words "ready-mixed" and "concrete". "ready-mixed" is not in the model while "concrete" is in the model, so the word_vecs list only includes one element which is the word vector of "concrete". The return value is the vector value of "concrete"
+	# If all the word in the doc are not in the model, word_vecs list is empty. The return value is nan.
     def vectorize(self, doc):
         ''' Identify the vector values for each word in the given document '''
         doc = doc.lower()
@@ -75,8 +81,15 @@ w2v_model = KeyedVectors.load_word2vec_format(model_path, binary=True, limit = m
 		
 ds = DocSim(w2v_model)
 
-source_doc = 'how to delete an invoice'
-target_docs = ['delete a invoice', 'how do i remove an invoice', 'purge an invoice']
+source_doc = 'Ready-Mixed Concrete'
+target_docs = ['Ready-Mixed', 'Concrete', 'Concrete Products']
+# For source_doc 'Ready-Mixed Concrete', since ready-mixed is not included in the Google News Vector Model, it will be considered as the same as 'Concrete';
+# For target_doc 'Ready-Mixed', since ready-mixed is not included in the Google News Vector Model, its vector is nan;
+# For target_doc 'Concrete Products', its vector is the mean value of vector of 'Concrete' and 'Products';
+#
+# The cos similarity score of 'Ready-Mixed Concrete' and 'Concrete' is 1, since source_doc 'Ready-Mixed Concrete' has been be considered as the same as 'Concrete';
+# The cos similarity score of 'Ready-Mixed Concrete' and 'Concrete Products' is 0.755, since the vector of 'Concrete Products' is the mean value of word vector 'Concrete' and word vector 'Products';
+# The cos similarity score of 'Ready-Mixed Concrete' and 'Ready-Mixed' is 0, since the vector of 'Ready-Mixed' is nan;
 
 ''' This will return 3 target docs with similarity score '''
 sim_scores = ds.calculate_similarity(source_doc, target_docs)
